@@ -1,7 +1,7 @@
-// @ts-nocheck
-
+import { Principal } from "@dfinity/principal";
 import isObject from "lodash/isObject";
 import { ResultKey, Result } from "../types/global";
+import { AccountIdentifier } from "./ic/account_identifier";
 
 export function isResultKey(key: string) {
   return isResultErrKey(key) || isResultOkKey(key);
@@ -57,4 +57,9 @@ export function enumResultFormat<T>(result: any): Result<T> {
     data: result as T,
     message: "",
   };
+}
+
+export function principalToAccount(principal: string | undefined) {
+  if (!principal) return undefined;
+  return AccountIdentifier.fromPrincipal({ principal: Principal.fromText(principal) }).toHex();
 }

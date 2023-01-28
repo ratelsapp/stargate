@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import { useMemo } from "react";
 import { Principal } from "@dfinity/principal";
 import NickName from "components/Profile/NickName";
+import { principalToAccount } from "utils/index";
 
 export default function Banner() {
   const images = [
@@ -75,6 +76,15 @@ export default function Banner() {
     return !!follower.find((user) => user.toString() === principal.toString());
   }, [follower, principal]);
 
+  const isOwner = useMemo(() => {
+    if (!principal || !userPrincipal) return false;
+    return principal?.toString() === userPrincipal;
+  }, [principal, userPrincipal]);
+
+  const handleNickUpdated = () => {
+    setReload(!reload);
+  };
+
   return (
     <Box sx={{ paddingTop: "60px", display: "flex" }}>
       <Box sx={{ width: "340px", height: "340px", position: "relative" }}>
@@ -109,7 +119,7 @@ export default function Banner() {
       </Box>
 
       <Box sx={{ flex: "auto", margin: "0 0 0 50px" }}>
-        <NickName profile={profile}></NickName>
+        <NickName profile={profile} isOwner={isOwner} onUpdateSuccess={handleNickUpdated}></NickName>
 
         <Box
           sx={{
@@ -124,7 +134,7 @@ export default function Banner() {
               Account ID:
             </Typography>
             <Typography style={{ wordBreak: "break-all" }} component="span" color="secondary">
-              {user?.account}
+              {principalToAccount(userPrincipal) ?? "--"}
             </Typography>
 
             <Box
@@ -145,7 +155,7 @@ export default function Banner() {
               Principal ID:
             </Typography>
             <Typography color="secondary" component="span">
-              {user?.principalId}
+              {userPrincipal ?? "--"}
             </Typography>
 
             <Box
@@ -220,11 +230,13 @@ export default function Banner() {
           </Box>
         </Box>
 
-        <Box sx={{ margin: "40px 0 0 0" }}>
-          <Button onClick={isFollowing ? handleUnFollow : handleFollow} variant="contained">
-            {isFollowing ? "UnFollow" : "Follow on STARGATE"}
-          </Button>
-        </Box>
+        {!isOwner ? (
+          <Box sx={{ margin: "40px 0 0 0" }}>
+            <Button onClick={isFollowing ? handleUnFollow : handleFollow} variant="contained">
+              {isFollowing ? "UnFollow" : "Follow on STARGATE"}
+            </Button>
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );

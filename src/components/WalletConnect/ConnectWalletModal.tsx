@@ -87,6 +87,7 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
       <Box>
         {Wallets.map((wallet) => (
           <Box
+            key={wallet.name}
             sx={{
               display: "flex",
               alignItems: "center",

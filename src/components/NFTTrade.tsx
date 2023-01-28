@@ -63,6 +63,7 @@ export default function NFTTrade() {
       {content.map((item) => {
         return (
           <Box
+            key={item.key}
             sx={{ margin: "24px 0 0 0", "&:nth-of-type(1)": { margin: "30px 0 0 0" } }}
             className={classes.sectionContent}
           >
