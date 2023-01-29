@@ -79,9 +79,9 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
     >
       <Box sx={{ display: "flex", alignItems: "center", margin: "0 0 32px 0" }}>
         <Typography sx={{ fontSize: "36px", fontWeight: 600, flex: " auto" }}>{title}</Typography>
-        <Box sx={{ cursor: "pointer" }} onClick={handleClose}>
+        {/* <Box sx={{ cursor: "pointer" }} onClick={handleClose}>
           <CloseIcon></CloseIcon>
-        </Box>
+        </Box> */}
       </Box>
 
       <Box>

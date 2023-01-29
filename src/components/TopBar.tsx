@@ -2,6 +2,8 @@ import Logo from "../assets/images/logo.svg";
 import { Box, Typography } from "@mui/material";
 import ConnectWalletModal from "./WalletConnect/ConnectWalletModal";
 import { useConnectorModalManager } from "store/wallet/hooks";
+import { useIsConnected } from "store/wallet/hooks";
+import { useEffect } from "react";
 
 function ConnectIcon() {
   return (
@@ -17,17 +19,25 @@ function ConnectIcon() {
 export default function TopBar() {
   const [, connectorManager] = useConnectorModalManager();
 
+  const isConnected = useIsConnected();
+
+  useEffect(() => {
+    if (!isConnected) {
+      connectorManager(true);
+    }
+  }, [isConnected]);
+
   return (
     <>
       <Box sx={{ display: "flex", padding: "40px 60px 0", alignItems: "center" }}>
         <img src={Logo} style={{ width: "172px", height: "36px" }} />
 
-        <Box sx={{ flex: "auto", display: "flex", justifyContent: "flex-end" }}>
+        {/* <Box sx={{ flex: "auto", display: "flex", justifyContent: "flex-end" }}>
           <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" }} onClick={() => connectorManager(true)}>
             <ConnectIcon></ConnectIcon>
             <Typography sx={{ margin: "0 0 0 10px" }}>Connect Wallet</Typography>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
 
       <ConnectWalletModal title="Connect Wallet"></ConnectWalletModal>

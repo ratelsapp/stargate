@@ -22,17 +22,11 @@ export interface AllState {
   snackbar: SnackbarState;
 }
 
-const defaultStorageConfig = {
-  storage: storage,
-  stateReconciler: autoMergeLevel2,
-  version: 0,
-};
-
 const rootPersistConfig = {
   key: "root",
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ["cache", "session", "global", "loading", "snackbar"],
+  blacklist: ["session", "global", "loading", "snackbar"],
   version: 1,
 };
 
