@@ -43,7 +43,7 @@ export class Connector {
     }
 
     // @ts-ignore
-    window.icConnector = this.connector;
+    window.connector = this.connector;
   }
 
   public async create(connector: WalletType, config?: { [key: string]: any }) {

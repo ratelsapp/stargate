@@ -3,7 +3,7 @@ import { StoicIdentity } from "ic-stoic-identity";
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 import type { IConnector } from "./connectors";
 import { IDL } from "@dfinity/candid";
-import { LEDGER_CANISTER_ID, WalletType } from "constants/index";
+import { WalletType } from "constants/index";
 
 export const WALLET_ACCOUNTS_STORAGE_NAME = "STOIC_WALLET_ACCOUNTS";
 

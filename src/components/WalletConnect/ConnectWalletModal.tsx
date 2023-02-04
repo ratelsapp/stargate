@@ -1,10 +1,10 @@
 import { Dialog, Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PlugIcon from "./PlugIcon";
 import StoicIcon from "./StoicIcon";
 import { WalletType } from "constants/index";
 import { Connector } from "utils/connector/index";
-import { useConnectorModalManager } from "store/wallet/hooks";
+import GlobalContext from "../GlobalContext";
 
 interface ConnectWalletModalProps {
   onClose?: () => void;
@@ -30,7 +30,7 @@ const Wallets = [
 export default function ConnectWalletModal({ onClose, title }: ConnectWalletModalProps) {
   const [loading, setLoading] = useState<undefined | string>(undefined);
 
-  const [open, manager] = useConnectorModalManager();
+  const { open, setOpen } = useContext(GlobalContext);
 
   const handleConnect = async (wallet: string) => {
     if (loading) return;
@@ -48,7 +48,7 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
       const isConnected = await connector.connect();
 
       if (isConnected) {
-        manager(false);
+        setOpen(false);
       }
 
       setLoading(undefined);
@@ -61,7 +61,7 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
   };
 
   const handleClose = () => {
-    manager(false);
+    setOpen(false);
     if (onClose) onClose();
   };
 

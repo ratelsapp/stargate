@@ -1,7 +1,7 @@
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 import type { IConnector, RequestTransferParams } from "./connectors";
 import { IDL } from "@dfinity/candid";
-// import { getStoreWalletUnlocked } from "store/auth/hooks";
+import { getWalletIsLocked } from "store/wallet/hooks";
 import { host } from "constants/server";
 import { WalletType, CANISTER_IDS, LEDGER_CANISTER_ID } from "constants/index";
 
@@ -58,17 +58,17 @@ export class PlugConnector implements IConnector {
   }
 
   async isConnected() {
-    // const isUnLocked = getStoreWalletUnlocked();
+    const isLocked = getWalletIsLocked();
 
-    // if (typeof isUnLocked === "boolean" && !isUnLocked) {
-    //   return false;
-    // }
+    if (typeof isLocked === "boolean" && isLocked) {
+      return false;
+    }
 
-    // if (window.ic.plug) {
-    //   return await window.ic.plug.isConnected();
-    // }
+    if (window.ic.plug) {
+      return await window.ic.plug.isConnected();
+    }
 
-    return false;
+    return true;
   }
 
   async connect() {

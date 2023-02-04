@@ -104,12 +104,6 @@ export class Actor {
             message = _error.includes(`"Message"`) && !!_message ? _message[1] : _error;
           }
 
-          console.log("Error =====================>");
-          console.log("canister: ", canisterId);
-          console.log("method: ", key);
-          console.log("rejected: ", message);
-          console.log("Error =====================>");
-
           this.errorCallbacks.forEach((call) => {
             call({ canisterId, method: key, message });
           });

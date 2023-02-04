@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Box, Avatar, Typography, Button } from "@mui/material";
+import { Box, Avatar, Typography, Button, CircularProgress } from "@mui/material";
 import avatar from "../assets/images/banner/m1.svg";
 import m2 from "../assets/images/banner/m2.svg";
 import m3 from "../assets/images/banner/m3.svg";
 import m4 from "../assets/images/banner/m4.svg";
 import m5 from "../assets/images/banner/m5.svg";
 import { useAccount, usePrincipal } from "store/wallet/hooks";
-import EditAvatarIcon from "assets/images/EditAvatarIcon.svg";
+// import EditAvatarIcon from "assets/images/EditAvatarIcon.svg";
 import CopyIcon from "assets/images/Copy";
 import CopyToClipboard from "copy-to-clipboard";
 import { Twitter, ShallowTwitter } from "assets/images/Twitter";
@@ -21,26 +21,8 @@ import NickName from "components/Profile/NickName";
 import { principalToAccount } from "utils/index";
 
 export default function Banner() {
-  const images = [
-    {
-      key: 1,
-      src: m2,
-    },
-    {
-      key: 2,
-      src: m3,
-    },
-    {
-      key: 3,
-      src: m4,
-    },
-    {
-      key: 4,
-      src: m5,
-    },
-  ];
-
   const [reload, setReload] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
 
   const { principal: userPrincipal } = useParams<{ principal: string }>();
 
@@ -49,14 +31,18 @@ export default function Banner() {
 
   const handleUnFollow = async () => {
     if (!principal || !userPrincipal) return;
+    setFollowLoading(true);
     const result = await unFollow(Principal.fromText(userPrincipal));
     setReload(!reload);
+    setFollowLoading(false);
   };
 
   const handleFollow = async () => {
     if (!principal || !userPrincipal) return;
+    setFollowLoading(true);
     const result = await follow(Principal.fromText(userPrincipal));
     setReload(!reload);
+    setFollowLoading(false);
   };
 
   const handleCopyPrincipal = () => {
@@ -90,7 +76,7 @@ export default function Banner() {
       <Box sx={{ width: "340px", height: "340px", position: "relative" }}>
         <Avatar src={avatar} sx={{ width: "340px", height: "340px", borderRadius: "16px" }} />
 
-        <Avatar
+        {/* <Avatar
           src={EditAvatarIcon}
           sx={{
             width: "44px",
@@ -100,9 +86,9 @@ export default function Banner() {
             bottom: "16px",
             cursor: "pointer",
           }}
-        ></Avatar>
+        ></Avatar> */}
 
-        <Box
+        {/* <Box
           sx={{
             display: "grid",
             gridTemplateColumns: "repeat(5, 1fr)",
@@ -115,7 +101,7 @@ export default function Banner() {
               <Avatar key={data.key} src={data.src} sx={{ width: "60px", height: "60px", borderRadius: "12px" }} />
             );
           })}
-        </Box>
+        </Box> */}
       </Box>
 
       <Box sx={{ flex: "auto", margin: "0 0 0 50px" }}>
@@ -233,6 +219,9 @@ export default function Banner() {
         {!isOwner ? (
           <Box sx={{ margin: "40px 0 0 0" }}>
             <Button onClick={isFollowing ? handleUnFollow : handleFollow} variant="contained">
+              {followLoading ? (
+                <CircularProgress size={16} sx={{ color: "#fff", margin: "0 6px 0 0" }}></CircularProgress>
+              ) : null}
               {isFollowing ? "UnFollow" : "Follow on STARGATE"}
             </Button>
           </Box>

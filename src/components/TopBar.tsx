@@ -1,9 +1,12 @@
-import Logo from "../assets/images/logo.svg";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Popper } from "@mui/material";
+import { ClickAwayListener } from "@mui/base";
 import ConnectWalletModal from "./WalletConnect/ConnectWalletModal";
-import { useConnectorModalManager } from "store/wallet/hooks";
-import { useIsConnected } from "store/wallet/hooks";
-import { useEffect } from "react";
+import { useIsConnected, usePrincipal, useUserLogout } from "store/wallet/hooks";
+import { useEffect, useState, useRef, useContext } from "react";
+import ComLogo from "../assets/images/ratelsComLogo.svg";
+import Logo from "../assets/images/logo.svg";
+import Online from "../assets/images/online.svg";
+import GlobalContext from "./GlobalContext";
 
 function ConnectIcon() {
   return (
@@ -17,27 +20,99 @@ function ConnectIcon() {
 }
 
 export default function TopBar() {
-  const [, connectorManager] = useConnectorModalManager();
+  const globalContext = useContext(GlobalContext);
 
   const isConnected = useIsConnected();
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  const logout = useUserLogout();
 
   useEffect(() => {
     if (!isConnected) {
-      connectorManager(true);
+      globalContext.setOpen(true);
     }
   }, [isConnected]);
+
+  const principal = usePrincipal();
+
+  const handleMouseEnter = () => {
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setOpen(false);
+  };
+
+  const handleDisconnect = () => {
+    logout();
+  };
 
   return (
     <>
       <Box sx={{ display: "flex", padding: "40px 60px 0", alignItems: "center" }}>
         <img src={Logo} style={{ width: "172px", height: "36px" }} />
 
-        {/* <Box sx={{ flex: "auto", display: "flex", justifyContent: "flex-end" }}>
-          <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" }} onClick={() => connectorManager(true)}>
-            <ConnectIcon></ConnectIcon>
-            <Typography sx={{ margin: "0 0 0 10px" }}>Connect Wallet</Typography>
-          </Box>
-        </Box> */}
+        <Box sx={{ flex: "auto", display: "flex", justifyContent: "flex-end" }}>
+          {!isConnected ? (
+            <Box
+              sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+              onClick={() => globalContext.setOpen(true)}
+            >
+              <ConnectIcon></ConnectIcon>
+              <Typography sx={{ margin: "0 0 0 10px" }}>Connect Wallet</Typography>
+            </Box>
+          ) : null}
+          {isConnected ? (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <a href="https://5fcuc-3aaaa-aaaam-qabea-cai.raw.ic0.app/#/" target="_blank">
+                <img src={ComLogo} style={{ width: "92px", height: "32px" }}></img>
+              </a>
+              <Box sx={{ width: "1px", height: "24px", background: "#CCCCCC", margin: "0 32px" }}></Box>
+              <Box
+                sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                ref={ref}
+              >
+                <img src={Online} style={{ width: "40px", height: "40px" }}></img>
+                <Typography
+                  sx={{
+                    margin: "0 0 0 10px",
+                    width: "100px",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {principal?.toString()}
+                </Typography>
+
+                <Popper open={open} anchorEl={ref?.current} placement="bottom">
+                  <ClickAwayListener onClickAway={() => setOpen(false)}>
+                    <Box
+                      sx={{
+                        width: "120px",
+                        height: "40px",
+                        borderRadius: "8px",
+                        background: "#000",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                      }}
+                      onClick={handleDisconnect}
+                    >
+                      <Typography fontWeight={500} color="#ffffff">
+                        Disconnect
+                      </Typography>
+                    </Box>
+                  </ClickAwayListener>
+                </Popper>
+              </Box>
+            </Box>
+          ) : null}
+        </Box>
       </Box>
 
       <ConnectWalletModal title="Connect Wallet"></ConnectWalletModal>

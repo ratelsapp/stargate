@@ -11,7 +11,6 @@ export interface AuthState {
   type: null | WalletType;
   isConnected: boolean;
   account: string;
-  open: boolean;
 }
 
 export const initialState: AuthState = {
@@ -19,5 +18,4 @@ export const initialState: AuthState = {
   type: null,
   isConnected: false,
   account: "",
-  open: false,
 };

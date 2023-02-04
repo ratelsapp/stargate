@@ -1,4 +1,4 @@
-import { login, logout, updateConnected, updateConnectorModalOpen } from "./actions";
+import { login, logout, updateConnected } from "./actions";
 import { initialState } from "./states";
 
 import { createReducer } from "@reduxjs/toolkit";
@@ -16,8 +16,5 @@ export default createReducer(initialState, (builder) => {
     })
     .addCase(updateConnected, (state, { payload }) => {
       state.isConnected = payload.isConnected;
-    })
-    .addCase(updateConnectorModalOpen, (state, { payload }) => {
-      state.open = payload;
     });
 });

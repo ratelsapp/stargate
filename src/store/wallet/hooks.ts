@@ -56,11 +56,14 @@ export function useInitialWallet() {
   useEffect(() => {
     (async () => {
       const type = store.getState().wallet.type;
-      const isConnected = await getWalletIsConnected();
-      if (!isConnected) await initialWallet();
-      if (type) actor.setConnector(type);
-      dispatch(updateConnected({ isConnected: true }));
-      dispatch(_updateLockStatus(false));
+
+      if (type) {
+        await initialWallet();
+        actor.setConnector(type);
+        dispatch(updateConnected({ isConnected: true }));
+        dispatch(_updateLockStatus(false));
+      }
+
       setLoading(false);
     })();
   }, [isLocked]);
@@ -137,18 +140,4 @@ export function usePrincipal(): Principal | undefined {
     if (!principal) return undefined;
     return Principal.fromText(principal);
   }, [principal]);
-}
-
-export function useConnectorModalManager(): [boolean, (open: boolean) => void] {
-  const dispatch = useAppDispatch();
-  const open = useAppSelector((state) => state.wallet.open);
-
-  const manage = useCallback(
-    (open: boolean) => {
-      dispatch(updateConnectorModalOpen(open));
-    },
-    [dispatch]
-  );
-
-  return [open, manage];
 }
