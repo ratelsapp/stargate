@@ -19,6 +19,7 @@ import { useMemo } from "react";
 import { Principal } from "@dfinity/principal";
 import NickName from "components/Profile/NickName";
 import { principalToAccount } from "utils/index";
+import Copy, { CopyChildProps } from "components/Copy";
 
 export default function Banner() {
   const [reload, setReload] = useState(false);
@@ -115,26 +116,30 @@ export default function Banner() {
             margin: "20px 0 0 0",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography sx={{ fontWeight: 500, margin: "0 10px 0 0" }} component="span">
-              Account ID:
-            </Typography>
-            <Typography style={{ wordBreak: "break-all" }} component="span" color="secondary">
-              {principalToAccount(userPrincipal) ?? "--"}
-            </Typography>
+          <Copy content={principalToAccount(userPrincipal) ?? ""}>
+            {({ copy }: CopyChildProps) => (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography sx={{ fontWeight: 500, margin: "0 10px 0 0" }} component="span">
+                  Account ID:
+                </Typography>
+                <Typography style={{ wordBreak: "break-all" }} component="span" color="secondary">
+                  {principalToAccount(userPrincipal) ?? "--"}
+                </Typography>
 
-            <Box
-              sx={{
-                margin: "0 0 0 5px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={handleCopyAccount}
-            >
-              <CopyIcon />
-            </Box>
-          </Box>
+                <Box
+                  sx={{
+                    margin: "0 0 0 5px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  onClick={copy}
+                >
+                  <CopyIcon />
+                </Box>
+              </Box>
+            )}
+          </Copy>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography sx={{ fontWeight: 500, margin: "0 10px 0 0" }} component="span">

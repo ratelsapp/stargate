@@ -8,11 +8,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./themes";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import Snackbar from "./components/Snackbar";
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme()}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <Snackbar />
         <App>
           <RouterProvider router={router} />
         </App>

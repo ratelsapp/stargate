@@ -7,21 +7,15 @@ export default createReducer(initialState, (builder) => {
     .addCase(openSnackbar, (state, { payload }) => {
       return {
         ...state,
-        action: !state.action,
         open: true,
         message: payload.message ? payload.message : initialState.message,
-        anchorOrigin: payload.anchorOrigin ? payload.anchorOrigin : initialState.anchorOrigin,
-        variant: payload.variant ? payload.variant : initialState.variant,
-        alertSeverity: payload.alertSeverity ? payload.alertSeverity : initialState.alertSeverity,
-        transition: payload.transition ? payload.transition : initialState.transition,
         close: false,
-        actionButton: payload.actionButton ? payload.actionButton : initialState.actionButton,
+        type: payload.type,
       };
     })
-    .addCase(closeSnackbar, (state, { payload }) => {
+    .addCase(closeSnackbar, (state) => {
       return {
         ...state,
-        action: !state.action,
         open: false,
         message: "",
         close: true,
