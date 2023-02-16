@@ -205,7 +205,7 @@ export default function Banner() {
         <Box sx={{ margin: "40px 0 0 0", display: "flex" }}>
           <Box>
             <Typography fontSize="22px" fontWeight={600}>
-              {profile?.following.toString()}
+              {profile?.following.toString() ?? "--"}
             </Typography>
             <Typography color="text.secondary" sx={{ marginTop: "10px" }}>
               Followings
@@ -213,7 +213,7 @@ export default function Banner() {
           </Box>
           <Box sx={{ flex: "auto", margin: "0 0 0 80px" }}>
             <Typography fontSize="22px" fontWeight={600}>
-              {profile?.followers.toString()}
+              {profile?.followers.toString() ?? "--"}
             </Typography>
             <Typography color="text.secondary" sx={{ marginTop: "10px" }}>
               Followers

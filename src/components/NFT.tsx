@@ -1,71 +1,41 @@
 import { Box, Typography, Avatar } from "@mui/material";
-import m1 from "../assets/images/nft/m1.svg";
-import m2 from "../assets/images/nft/m2.svg";
-import m3 from "../assets/images/nft/m3.svg";
-import m4 from "../assets/images/nft/m4.svg";
-import m5 from "../assets/images/nft/m5.svg";
 import { useGlobalStyles } from "./style";
+import { useUserNFTs, useNFTImage } from "hooks/calls";
+import { useParams } from "react-router-dom";
+import { UserNFTElement } from "types/nft";
 
-export default function NFT() {
-  const content = [
-    {
-      key: 1,
-      title: "Entrepot",
-      hasBadge: true,
-      images: [m1, m2, m3, m4, m5],
-    },
-    {
-      key: 2,
-      title: "Entrepot",
-      hasBadge: true,
-      images: [m1, m2, m3, m4, m5],
-    },
-    {
-      key: 3,
-      title: "Entrepot",
-      hasBadge: true,
-      images: [m1, m2, m3, m4, m5],
-    },
-  ];
+function NFT({ nft }: { nft: UserNFTElement }) {
+  const { result: img } = useNFTImage(nft.id);
 
+  return (
+    <a href={`https://entrepot.app/marketplace/asset/${nft.id}`} target="_blank">
+      <Avatar src={img} sx={{ width: "80px", height: "80px", borderRadius: "2px" }}></Avatar>
+    </a>
+  );
+}
+
+export default function NFTs() {
   const classes = useGlobalStyles();
+
+  const { principal: userPrincipal } = useParams<{ principal: string }>();
+
+  const { result: nfts } = useUserNFTs(userPrincipal);
 
   return (
     <Box sx={{ padding: "0 0 0 390px", margin: "60px 0 0 0" }}>
       <Typography sx={{ fontWeight: 500, fontSize: "36px" }}>NFT</Typography>
 
-      <Box>
-        {content.map((item) => {
-          return (
-            <Box
-              key={item.key}
-              className={classes.sectionContent}
-              sx={{
-                margin: "24px 0 0 0",
-                "&:nth-of-type(1)": {
-                  margin: "30px 0 0 0",
-                },
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography sx={{ fontWeight: 500, fontSize: "22px" }}>{item.title}</Typography>
-                {item.hasBadge && (
-                  <Box sx={{ margin: "0 0 0 10px" }} className={classes.standardLabel}>
-                    <Typography color="text.light" fontSize="12px">
-                      EXT
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
-
-              <Box sx={{ margin: "17px 0 0 0", display: "flex", gap: "16px 16px" }}>
-                {item.images.map((img, key) => {
-                  return <Avatar key={key} src={img} sx={{ width: "80px", height: "80px", borderRadius: "2px" }} />;
-                })}
-              </Box>
-            </Box>
-          );
-        })}
+      <Box
+        className={classes.sectionContent}
+        sx={{
+          margin: "30px 0 0 0",
+        }}
+      >
+        <Box sx={{ display: "flex", gap: "16px 16px", flexWrap: "wrap" }}>
+          {nfts?.map((ele) => (
+            <NFT nft={ele} key={ele.id} />
+          ))}
+        </Box>
       </Box>
     </Box>
   );
