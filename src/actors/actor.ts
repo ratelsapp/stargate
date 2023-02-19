@@ -12,7 +12,7 @@ export type ActorConstructor = {
   agent?: HttpAgent;
 };
 
-const ICHost = "https://ic0.app";
+const icHost = "https://ic0.app";
 
 export function isICConnector(connector: WalletType) {
   return connector === WalletType.STOIC;
@@ -33,7 +33,7 @@ export type ActorErrorCallback = (error: ActorError) => void;
 export class Actor {
   private connector: WalletType = WalletType.STOIC;
   private agent: null | HttpAgent = null;
-  private host: string = "https://ic0.app";
+  private host: string = icHost;
   private errorCallbacks: ActorErrorCallback[] = [];
 
   public setConnector(connector: WalletType) {
@@ -76,7 +76,7 @@ export class Actor {
       canisterId,
       idlFactory,
       agent: _agent,
-      fetchRootKey: _host !== ICHost,
+      fetchRootKey: _host !== icHost,
     });
 
     const _actor: any = {};

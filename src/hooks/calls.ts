@@ -1,9 +1,11 @@
 import { useCallData } from "./useCallData";
 import axios from "axios";
 import { useCallback } from "react";
-import { enumResultFormat, decodeTokenId, isValidPrincipal, principalToAccount } from "utils/index";
+import { enumResultFormat, isValidPrincipal, principalToAccount } from "utils/index";
 import { UserNFTElement, NFTTransaction } from "types/nft";
 import entrepot from "utils/entrepot";
+import { tokenList } from "actors/index";
+import { TokenMetadata } from "types/token";
 
 export const USER_ALL_NFTS_API = (account: string) =>
   `https://us-central1-entrepot-api.cloudfunctions.net/api/user/${account}/all`;
@@ -38,4 +40,12 @@ export function useUserNFTTransactions(account: string | undefined) {
   }, [account]);
 
   return useCallData(call, !!account);
+}
+
+export function useTokens() {
+  const call = useCallback(async () => {
+    return enumResultFormat<TokenMetadata[]>(await (await tokenList()).getList()).data;
+  }, []);
+
+  return useCallData(call);
 }

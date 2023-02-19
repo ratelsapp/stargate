@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { Box, Avatar, Typography, Button, CircularProgress } from "@mui/material";
 import avatar from "../assets/images/banner/m1.svg";
-import m2 from "../assets/images/banner/m2.svg";
-import m3 from "../assets/images/banner/m3.svg";
-import m4 from "../assets/images/banner/m4.svg";
-import m5 from "../assets/images/banner/m5.svg";
 import { useAccount, usePrincipal } from "store/wallet/hooks";
 // import EditAvatarIcon from "assets/images/EditAvatarIcon.svg";
 import CopyIcon from "assets/images/Copy";

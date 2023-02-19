@@ -1,4 +1,4 @@
-export const idlFactory = ({ IDL }) => {
+export const idlFactory = ({ IDL }: any) => {
   const Result = IDL.Variant({ ok: IDL.Bool, err: IDL.Text });
   const Result_7 = IDL.Variant({ ok: IDL.Nat, err: IDL.Text });
   const User = IDL.Record({

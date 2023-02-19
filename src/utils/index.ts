@@ -1,6 +1,6 @@
 import { Principal } from "@dfinity/principal";
 import isObject from "lodash/isObject";
-import { ResultKey, Result } from "../types/global";
+import { ResultStatus, Result } from "../types/global";
 import { AccountIdentifier } from "./ic/account_identifier";
 import BigNumber from "bignumber.js";
 import dayjs from "dayjs";
@@ -20,7 +20,7 @@ export function isResultOkKey(key: string) {
 export function enumResultFormat<T>(result: any): Result<T> {
   if (result === null || result === undefined) {
     return {
-      status: ResultKey.ERROR,
+      status: ResultStatus.ERROR,
       message: "",
       data: undefined,
     };
@@ -48,14 +48,14 @@ export function enumResultFormat<T>(result: any): Result<T> {
     }
 
     return {
-      status: isResultErrKey(key[0]) ? ResultKey.ERROR : ResultKey.OK,
+      status: isResultErrKey(key[0]) ? ResultStatus.ERROR : ResultStatus.OK,
       data: isResultOkKey(key[0]) ? (result[key[0]] as T) : undefined,
       message: message,
     };
   }
 
   return {
-    status: ResultKey.OK,
+    status: ResultStatus.OK,
     data: result as T,
     message: "",
   };
@@ -94,5 +94,43 @@ export const parseTokenAmount = (
   if (Number.isNaN(Number(amount))) return new BigNumber(String(amount));
   return new BigNumber(String(amount)).dividedBy(10 ** Number(decimals));
 };
+
+export const formatTokenAmount = (
+  amount: string | number | bigint | undefined,
+  decimals: number | bigint = 8
+): BigNumber => {
+  if (amount !== 0 && !amount) return new BigNumber(0);
+  if (typeof amount === "bigint") amount = Number(amount);
+  if (typeof decimals === "bigint") decimals = Number(decimals);
+  if (Number.isNaN(Number(amount))) return new BigNumber(amount);
+  return new BigNumber(amount).multipliedBy(10 ** Number(decimals));
+};
+
+export const NO_GROUP_SEPARATOR_FORMATTER = {
+  groupSeparator: "",
+};
+
+export function numberToString(num: number | BigNumber | bigint): string {
+  if (num === 0 || num === BigInt(0)) return "0";
+  if (num) return new BigNumber(typeof num === "bigint" ? String(num) : num).toFormat(NO_GROUP_SEPARATOR_FORMATTER);
+  return "";
+}
+
+export type Override<P, S> = Omit<P, keyof S> & S;
+
+export type StatusResult<T> = {
+  readonly status: ResultStatus;
+  readonly data?: T;
+  readonly message: string;
+};
+
+export function isBigIntMemo(val: bigint | number[] | undefined): val is bigint {
+  if (typeof val === "bigint") return true;
+  return false;
+}
+
+export function nullParamsFormat<T>(value: T | null | undefined): [T] | [] {
+  return value ? [value] : [];
+}
 
 export * from "./nft";

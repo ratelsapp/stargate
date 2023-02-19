@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography, TextField, CircularProgress } from "@mui/material";
 import { updateNickName } from "hooks/index";
 import { UserAccountResponse } from "types/api";
-import { ResultKey } from "types/global";
+import { ResultStatus } from "types/global";
 import { useEffect } from "react";
 
 interface NickNameProps {
@@ -27,7 +27,7 @@ export default function NickName({ profile, isOwner, onUpdateSuccess }: NickName
 
     const { status } = await updateNickName(nickName);
 
-    if (status === ResultKey.OK) {
+    if (status === ResultStatus.OK) {
       setIsEditNick(false);
       if (onUpdateSuccess) onUpdateSuccess();
     }

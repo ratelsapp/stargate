@@ -4,6 +4,12 @@ import { backend } from "../actors/index";
 import { Principal } from "@dfinity/principal";
 import { enumResultFormat } from "utils/index";
 import { User, UserAccountResponse } from "../types/api";
+import { useParams } from "react-router-dom";
+
+export function usePrincipalFromParams() {
+  const { principal: userPrincipal } = useParams<{ principal: string }>();
+  return userPrincipal;
+}
 
 export function useUsers(account: string | undefined) {
   return useCallData(
