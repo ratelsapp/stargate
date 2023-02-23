@@ -39,14 +39,16 @@ export default function NFTTrade() {
   const classes = useGlobalStyles();
 
   const { principal: userPrincipal } = useParams<{ principal: string }>();
-
   const { result: transactions } = useUserNFTTransactions(userPrincipal);
 
   return (
     <Box sx={{ padding: "0 0 0 390px", margin: "60px 0 0 0" }}>
       <Typography sx={{ fontWeight: 500, fontSize: "36px" }}>NFT Trade</Typography>
 
-      <Box sx={{ margin: "30px 0 0 0" }} className={classes.sectionContent}>
+      <Box
+        sx={{ margin: "30px 0 0 0", maxHeight: "500px", overflow: "hidden auto" }}
+        className={classes.sectionContent}
+      >
         <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column", gap: "20px 0" }}>
           {transactions?.map((ele) => {
             return <TransactionElement key={ele.id} transaction={ele} />;

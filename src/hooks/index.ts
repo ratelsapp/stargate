@@ -76,3 +76,23 @@ export async function unFollow(user: Principal) {
 export async function updateNickName(nickName: string) {
   return enumResultFormat<boolean>(await (await backend(true)).updateNickname(nickName));
 }
+
+// export function useFetchICPPrice() {
+//   return useCallData(
+//     useCallback(async () => {
+//       const result = await fetch(
+//         `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?${new URLSearchParams({
+//           id: "8916",
+//           CMC_PRO_API_KEY: "6fca2d96-d1f4-4a88-b0d8-f10522f70421",
+//         })}`,
+//         {
+//           mode: "no-cors",
+//           method: "get",
+//           headers: {
+//             "X-CMC_PRO_API_KEY": "6fca2d96-d1f4-4a88-b0d8-f10522f70421",
+//           },
+//         }
+//       );
+//     }, [])
+//   );
+// }

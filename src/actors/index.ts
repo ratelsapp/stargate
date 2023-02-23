@@ -28,6 +28,9 @@ import { idlFactory as SwapFactoryIdl } from "../declarations/swap/SwapFactory.d
 import { _SERVICE as SwapPoolService } from "../declarations/swap/SwapPool";
 import { idlFactory as SwapPoolIdl } from "../declarations/swap/SwapPool.did";
 
+import { _SERVICE as BaseDataStructure } from "../declarations/swap/BaseDataStructure";
+import { idlFactory as BaseDataStructureIdl } from "../declarations/swap/BaseDataStructure.did";
+
 export const backend = async (identity?: ActorIdentity) =>
   await actor.create<BackendService>({
     idlFactory: BackendIdl,
@@ -81,4 +84,10 @@ export const swapPool = async (canisterId?: string) =>
   await actor.create<SwapPoolService>({
     idlFactory: SwapPoolIdl,
     canisterId: canisterId,
+  });
+
+export const swapData = async () =>
+  await actor.create<BaseDataStructure>({
+    idlFactory: BaseDataStructureIdl,
+    canisterId: "4coac-ryaaa-aaaag-qblkq-cai",
   });

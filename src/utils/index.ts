@@ -4,6 +4,11 @@ import { ResultStatus, Result } from "../types/global";
 import { AccountIdentifier } from "./ic/account_identifier";
 import BigNumber from "bignumber.js";
 import dayjs from "dayjs";
+import _Decimal from "decimal.js-light";
+// @ts-ignore
+import toFormat from "toformat";
+
+const Decimal = toFormat(_Decimal);
 
 export function isResultKey(key: string) {
   return isResultErrKey(key) || isResultOkKey(key);
@@ -131,6 +136,39 @@ export function isBigIntMemo(val: bigint | number[] | undefined): val is bigint 
 
 export function nullParamsFormat<T>(value: T | null | undefined): [T] | [] {
   return value ? [value] : [];
+}
+
+export enum Rounding {
+  ROUND_DOWN,
+  ROUND_HALF_UP,
+  ROUND_UP,
+}
+
+const toSignificantRounding = {
+  [Rounding.ROUND_DOWN]: Decimal.ROUND_DOWN,
+  [Rounding.ROUND_HALF_UP]: Decimal.ROUND_HALF_UP,
+  [Rounding.ROUND_UP]: Decimal.ROUND_UP,
+};
+
+export function toSignificant(
+  num: number | string | undefined,
+  significantDigits = 6,
+  format: { [key: string]: any } = { groupSeparator: "" },
+  rounding: Rounding = Rounding.ROUND_HALF_UP
+): string {
+  if (!num) return "--";
+
+  Decimal.set({
+    precision: significantDigits + 1,
+    rounding: toSignificantRounding[rounding],
+  });
+
+  const quotient = new Decimal(num).toSignificantDigits(significantDigits);
+  return quotient.toFormat(quotient.decimalPlaces(), format);
+}
+
+export function numFormat(num: number | string | undefined, significantDigits = 6): string {
+  return toSignificant(num, significantDigits, { groupSeparator: "," });
 }
 
 export * from "./nft";

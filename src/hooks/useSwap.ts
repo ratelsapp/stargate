@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 import { useCallData } from "./useCallData";
-import { swapFactory, swapPool } from "actors/index";
+import { swapFactory, swapPool, swapData } from "actors/index";
 import { enumResultFormat } from "utils";
 import { PoolData } from "declarations/swap/SwapFactory";
 import { Principal } from "@dfinity/principal";
+import { RecordPage } from "declarations/swap/BaseDataStructure";
 
 export async function getPoolData(token0: string, token1: string) {
   let _token0 = token0;
@@ -50,5 +51,14 @@ export function useQuotePrice(token0: string | undefined, token1: string | undef
       }
     }, [amountIn, token0, token1]),
     !!amountIn && amountIn !== "0" && !!token0 && !!token1
+  );
+}
+
+export function useUserTradeTransactions(account: string | undefined) {
+  return useCallData(
+    useCallback(async () => {
+      return enumResultFormat<RecordPage>(await (await swapData()).get(account!, BigInt(0), BigInt(300))).data;
+    }, [account]),
+    !!account
   );
 }

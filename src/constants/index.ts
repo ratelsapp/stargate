@@ -12,3 +12,4 @@ export const SERVER_CANISTER_ID = "viz6v-ziaaa-aaaak-qbhqa-cai";
 export * from "./ckBTC";
 export * from "./sns1";
 export * from "./wicp";
+export * from "./icp";

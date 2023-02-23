@@ -1,10 +1,10 @@
-import Community from "./Community";
+// import Community from "./Community";
 import NFTTrade from "./NFTTrade";
 import Ratel from "./Ratel";
 import TokenTrade from "./TokenTrade";
-import Social from "./Social";
-import Token from "./Token";
-import Did from "./Did";
+// import Social from "./Social";
+import Token from "./Token/Token";
+// import Did from "./Did";
 import NFT from "./NFT";
 import { Box } from "@mui/material";
 
@@ -16,9 +16,9 @@ export default function Main() {
       <NFTTrade />
       <Token />
       <TokenTrade />
-      <Community />
+      {/* <Community />
       <Did />
-      <Social />
+      <Social /> */}
     </Box>
   );
 }
