@@ -4,6 +4,7 @@ import { updateNickName } from "hooks/index";
 import { UserAccountResponse } from "types/api";
 import { ResultStatus } from "types/global";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 interface NickNameProps {
   profile: UserAccountResponse | undefined;
@@ -16,9 +17,15 @@ export default function NickName({ profile, isOwner, onUpdateSuccess }: NickName
   const [nickName, setNickName] = useState<string | undefined>(undefined);
   const [updating, setUpdating] = useState(false);
 
+  const { principal: userPrincipal } = useParams<{ principal: string }>();
+
   useEffect(() => {
-    setNickName(profile?.nickname);
-  }, [profile]);
+    if (!profile?.nickname) {
+      setNickName(userPrincipal);
+    } else {
+      setNickName(profile?.nickname);
+    }
+  }, [profile, userPrincipal]);
 
   const handleSaveNick = async () => {
     if (!nickName) return;

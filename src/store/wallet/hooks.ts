@@ -1,7 +1,7 @@
 import { useAppDispatch } from "store/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateLockStatus as _updateLockStatus, updateLoginAccount } from "../session/actions";
-import { login, logout, updateConnected, updateConnectorModalOpen } from "./actions";
+import { login, logout, updateConnected } from "./actions";
 import store from "../index";
 import { useAppSelector } from "store/hooks";
 import { WalletType } from "constants/index";

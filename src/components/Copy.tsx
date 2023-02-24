@@ -1,10 +1,9 @@
-import { ReactNode } from "react";
 import CopyToClipboard from "copy-to-clipboard";
 import isFunction from "lodash/isFunction";
 import { useTips } from "hooks/useTips";
 
 export interface CopyProps {
-  children: ReactNode;
+  children: ({ copy }: CopyChildProps) => JSX.Element;
   content: string;
 }
 

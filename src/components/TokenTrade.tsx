@@ -2,11 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { useGlobalStyles } from "./style";
 import CommonAvatar from "./CommonAvatar";
 import { useUserTradeTransactions } from "hooks/useSwap";
-import { usePrincipal } from "store/wallet/hooks";
 import { TransactionsType } from "types/token";
 import { useTokenLogo } from "hooks/token";
 import { numFormat } from "utils";
 import dayjs from "dayjs";
+import { useParams } from "react-router-dom";
+import NoData from "components/NoData";
 
 function SwapArrow() {
   return (
@@ -66,9 +67,9 @@ function Transaction({ transaction }: { transaction: TransactionsType }) {
 }
 
 export default function TokenTrade() {
-  const principal = usePrincipal();
+  const { principal: userPrincipal } = useParams<{ principal: string }>();
 
-  const { result: transactions } = useUserTradeTransactions(principal?.toString());
+  const { result: transactions } = useUserTradeTransactions(userPrincipal);
 
   const classes = useGlobalStyles();
 
@@ -83,6 +84,8 @@ export default function TokenTrade() {
         {transactions?.content.map((ele, index) => {
           return <Transaction key={`${ele.from}_${index}`} transaction={ele}></Transaction>;
         })}
+
+        {transactions?.content.length === 0 ? <NoData></NoData> : null}
       </Box>
     </Box>
   );

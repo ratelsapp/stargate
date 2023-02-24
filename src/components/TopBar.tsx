@@ -6,7 +6,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 import ComLogo from "../assets/images/ratelsComLogo.svg";
 import Logo from "../assets/images/logo.svg";
 import Online from "../assets/images/online.svg";
-import GlobalContext from "./GlobalContext";
+import GlobalContext from "../context";
 
 function ConnectIcon() {
   return (
@@ -51,7 +51,7 @@ export default function TopBar() {
   return (
     <>
       <Box sx={{ display: "flex", padding: "40px 60px 0", alignItems: "center" }}>
-        <img src={Logo} style={{ width: "172px", height: "36px" }} />
+        <img src={Logo} style={{ width: "172px", height: "36px" }} alt="" />
 
         <Box sx={{ flex: "auto", display: "flex", justifyContent: "flex-end" }}>
           {!isConnected ? (
@@ -65,8 +65,8 @@ export default function TopBar() {
           ) : null}
           {isConnected ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <a href="https://5fcuc-3aaaa-aaaam-qabea-cai.raw.ic0.app/#/" target="_blank">
-                <img src={ComLogo} style={{ width: "92px", height: "32px" }}></img>
+              <a href="https://5fcuc-3aaaa-aaaam-qabea-cai.raw.ic0.app/#/" target="_blank" rel="noreferrer">
+                <img src={ComLogo} style={{ width: "92px", height: "32px" }} alt=""></img>
               </a>
               <Box sx={{ width: "1px", height: "24px", background: "#CCCCCC", margin: "0 32px" }}></Box>
               <Box
@@ -75,7 +75,7 @@ export default function TopBar() {
                 onMouseLeave={handleMouseLeave}
                 ref={ref}
               >
-                <img src={Online} style={{ width: "40px", height: "40px" }}></img>
+                <img src={Online} style={{ width: "40px", height: "40px" }} alt=""></img>
                 <Typography
                   sx={{
                     margin: "0 0 0 10px",

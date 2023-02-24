@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { NFTTransaction } from "types/nft";
 import { useMemo } from "react";
 import { principalToAccount, parseTokenAmount, nanosecond2Timestamp } from "utils";
+import NoData from "./NoData";
 
 function TransactionElement({ transaction }: { transaction: NFTTransaction }) {
   const { result: image } = useNFTImage(transaction.token);
@@ -21,7 +22,7 @@ function TransactionElement({ transaction }: { transaction: NFTTransaction }) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
       <Box sx={{ display: "flex", flex: "auto", alignItems: "center" }}>
-        <a href={`https://entrepot.app/marketplace/asset/${transaction.token}`} target="_blank">
+        <a href={`https://entrepot.app/marketplace/asset/${transaction.token}`} target="_blank" rel="noreferrer">
           <CommonAvatar src={image} width="50px" height="50px" />
         </a>
         <Typography color="text.333" sx={{ margin: "0 0 0 16px", fontSize: "16px" }}>
@@ -53,6 +54,8 @@ export default function NFTTrade() {
           {transactions?.map((ele) => {
             return <TransactionElement key={ele.id} transaction={ele} />;
           })}
+
+          {transactions?.length === 0 ? <NoData></NoData> : null}
         </Box>
       </Box>
     </Box>

@@ -67,6 +67,7 @@ export class ICRC2Adapter extends BaseTokenAdapter<ICRC2Service> {
         metadata: [],
         name: name,
         symbol: symbol,
+        fee,
       } as Metadata,
       message: "",
     };

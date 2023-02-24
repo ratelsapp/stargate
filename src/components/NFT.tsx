@@ -1,14 +1,17 @@
 import { Box, Typography, Avatar } from "@mui/material";
 import { useGlobalStyles } from "./style";
-import { useUserNFTs, useNFTImage } from "hooks/calls";
+import { useUserNFTs, useNFTImage, getNFTImage } from "hooks/calls";
 import { useParams } from "react-router-dom";
 import { UserNFTElement } from "types/nft";
+import NoData from "./NoData";
+import GlobalContext from "../context";
+import { useContext, useEffect } from "react";
 
 function NFT({ nft }: { nft: UserNFTElement }) {
   const { result: img } = useNFTImage(nft.id);
 
   return (
-    <a href={`https://entrepot.app/marketplace/asset/${nft.id}`} target="_blank">
+    <a href={`https://entrepot.app/marketplace/asset/${nft.id}`} target="_blank" rel="noreferrer">
       <Avatar src={img} sx={{ width: "80px", height: "80px", borderRadius: "2px" }}></Avatar>
     </a>
   );
@@ -18,8 +21,14 @@ export default function NFTs() {
   const classes = useGlobalStyles();
 
   const { principal: userPrincipal } = useParams<{ principal: string }>();
-
   const { result: nfts } = useUserNFTs(userPrincipal);
+  const { setAvatar } = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (nfts && nfts.length) {
+      setAvatar(getNFTImage(nfts[0].id));
+    }
+  }, [nfts]);
 
   return (
     <Box sx={{ padding: "0 0 0 390px", margin: "60px 0 0 0" }}>
@@ -35,6 +44,8 @@ export default function NFTs() {
           {nfts?.map((ele) => (
             <NFT nft={ele} key={ele.id} />
           ))}
+
+          {nfts?.length === 0 ? <NoData></NoData> : null}
         </Box>
       </Box>
     </Box>

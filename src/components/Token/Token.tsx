@@ -120,11 +120,11 @@ export default function Tokens() {
             }}
           >
             {tokens
-              // @ts-ignore
               ?.sort((a, b) => {
                 if (a.rank < b.rank) return -1;
                 if (a.rank === b.rank) return 0;
                 if (a.rank > b.rank) return 1;
+                return 0;
               })
               .map((ele) => {
                 return <Token key={ele.canisterId} token={ele}></Token>;

@@ -1,10 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, Avatar, Typography, Button, CircularProgress } from "@mui/material";
-import avatar from "../assets/images/banner/m1.svg";
-import { useAccount, usePrincipal } from "store/wallet/hooks";
-// import EditAvatarIcon from "assets/images/EditAvatarIcon.svg";
+import { usePrincipal } from "store/wallet/hooks";
 import CopyIcon from "assets/images/Copy";
-import CopyToClipboard from "copy-to-clipboard";
 import { Twitter, ShallowTwitter } from "assets/images/Twitter";
 import { Github, ShallowGithub } from "assets/images/Github";
 import { Discord, ShallowDiscord } from "assets/images/Discord";
@@ -16,6 +13,7 @@ import { Principal } from "@dfinity/principal";
 import NickName from "components/Profile/NickName";
 import { principalToAccount } from "utils/index";
 import Copy, { CopyChildProps } from "components/Copy";
+import GlobalContext from "../context";
 
 export default function Banner() {
   const [reload, setReload] = useState(false);
@@ -23,13 +21,14 @@ export default function Banner() {
 
   const { principal: userPrincipal } = useParams<{ principal: string }>();
 
-  const account = useAccount();
   const principal = usePrincipal();
+
+  const { avatar } = useContext(GlobalContext);
 
   const handleUnFollow = async () => {
     if (!principal || !userPrincipal) return;
     setFollowLoading(true);
-    const result = await unFollow(Principal.fromText(userPrincipal));
+    await unFollow(Principal.fromText(userPrincipal));
     setReload(!reload);
     setFollowLoading(false);
   };
@@ -37,17 +36,9 @@ export default function Banner() {
   const handleFollow = async () => {
     if (!principal || !userPrincipal) return;
     setFollowLoading(true);
-    const result = await follow(Principal.fromText(userPrincipal));
+    await follow(Principal.fromText(userPrincipal));
     setReload(!reload);
     setFollowLoading(false);
-  };
-
-  const handleCopyPrincipal = () => {
-    CopyToClipboard(principal?.toString() ?? "");
-  };
-
-  const handleCopyAccount = () => {
-    CopyToClipboard(account);
   };
 
   const { result: profile } = useAccountProfile(userPrincipal, reload);
@@ -71,34 +62,16 @@ export default function Banner() {
   return (
     <Box sx={{ paddingTop: "60px", display: "flex" }}>
       <Box sx={{ width: "340px", height: "340px", position: "relative" }}>
-        <Avatar src={avatar} sx={{ width: "340px", height: "340px", borderRadius: "16px" }} />
-
-        {/* <Avatar
-          src={EditAvatarIcon}
+        <Avatar
+          src={avatar}
           sx={{
-            width: "44px",
-            height: "44px",
-            position: "absolute",
-            right: "16px",
-            bottom: "16px",
-            cursor: "pointer",
+            width: "340px",
+            height: "340px",
+            borderRadius: "16px",
+            background: "#fafafa",
+            "& .MuiSvgIcon-root": { display: "none" },
           }}
-        ></Avatar> */}
-
-        {/* <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "0 10px",
-            margin: "10px 0 0 0",
-          }}
-        >
-          {images.map((data) => {
-            return (
-              <Avatar key={data.key} src={data.src} sx={{ width: "60px", height: "60px", borderRadius: "12px" }} />
-            );
-          })}
-        </Box> */}
+        />
       </Box>
 
       <Box sx={{ flex: "auto", margin: "0 0 0 50px" }}>
@@ -137,26 +110,30 @@ export default function Banner() {
             )}
           </Copy>
 
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography sx={{ fontWeight: 500, margin: "0 10px 0 0" }} component="span">
-              Principal ID:
-            </Typography>
-            <Typography color="secondary" component="span">
-              {userPrincipal ?? "--"}
-            </Typography>
+          <Copy content={userPrincipal ?? ""}>
+            {({ copy }: CopyChildProps) => (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography sx={{ fontWeight: 500, margin: "0 10px 0 0" }} component="span">
+                  Principal ID:
+                </Typography>
+                <Typography color="secondary" component="span">
+                  {userPrincipal ?? "--"}
+                </Typography>
 
-            <Box
-              sx={{
-                margin: "0 0 0 5px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={handleCopyPrincipal}
-            >
-              <CopyIcon />
-            </Box>
-          </Box>
+                <Box
+                  sx={{
+                    margin: "0 0 0 5px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  onClick={copy}
+                >
+                  <CopyIcon />
+                </Box>
+              </Box>
+            )}
+          </Copy>
         </Box>
 
         <Box

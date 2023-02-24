@@ -1,5 +1,5 @@
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
-import type { IConnector, RequestTransferParams } from "./connectors";
+import type { IConnector } from "./connectors";
 import { IDL } from "@dfinity/candid";
 import { getWalletIsLocked } from "store/wallet/hooks";
 import { host } from "constants/server";

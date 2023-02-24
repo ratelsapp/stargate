@@ -23,10 +23,14 @@ export function useUserNFTs(account: string | undefined) {
   return useCallData(call, !!account);
 }
 
+export function getNFTImage(tokenId: string) {
+  return entrepot.EntrepotNFTImage(tokenId);
+}
+
 export function useNFTImage(tokenId: string) {
   return useCallData(
     useCallback(async () => {
-      return entrepot.EntrepotNFTImage(tokenId);
+      return getNFTImage(tokenId);
     }, [tokenId]),
     !!tokenId
   );

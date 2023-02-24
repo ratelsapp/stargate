@@ -1,10 +1,4 @@
-import {
-  BalanceRequest as _BalanceRequest,
-  TokenTransferRequest as _TransferRequest,
-  SetFeeToRequest as _SetFeeToRequest,
-  TransactionRequest as _TransactionRequest,
-  Metadata,
-} from "./types";
+import { BalanceRequest as _BalanceRequest, Metadata } from "./types";
 import { Result } from "types/global";
 import { ActorSubclass } from "@dfinity/agent";
 

@@ -25,23 +25,7 @@ export default function Ratel() {
       src: m5,
     },
     {
-      key: 4,
-      src: m1,
-    },
-    {
-      key: 4,
-      src: m5,
-    },
-    {
-      key: 4,
-      src: m1,
-    },
-    {
-      key: 4,
-      src: m5,
-    },
-    {
-      key: 4,
+      key: 5,
       src: m1,
     },
   ];
