@@ -45,7 +45,7 @@ export default function NFTs() {
             <NFT nft={ele} key={ele.id} />
           ))}
 
-          {nfts?.length === 0 ? <NoData></NoData> : null}
+          {nfts?.length === 0 || !nfts ? <NoData></NoData> : null}
         </Box>
       </Box>
     </Box>

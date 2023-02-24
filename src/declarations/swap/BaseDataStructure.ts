@@ -1,8 +1,6 @@
-import type { Principal } from "@dfinity/principal";
 import type { ActorMethod } from "@dfinity/agent";
 
 export type Address = string;
-export type Address__1 = string;
 export type NatResult = { ok: bigint } | { err: string };
 export interface Page {
   content: Array<TransactionsType>;
@@ -38,8 +36,8 @@ export interface SwapRecordInfo {
   feeAmount: bigint;
   action: TransactionType;
   feeAmountTotal: bigint;
-  token0Id: Address;
-  token1Id: Address;
+  token0Id: string;
+  token1Id: string;
   token0AmountTotal: bigint;
   liquidityTotal: bigint;
   from: string;
@@ -61,19 +59,14 @@ export interface SwapRecordInfo {
   poolId: string;
 }
 export type TransactionType =
-  | { fee: null }
-  | { burn: null }
+  | { decreaseLiquidity: null }
   | { claim: null }
-  | { mint: null }
   | { swap: null }
   | { addLiquidity: null }
-  | { removeLiquidity: null }
-  | { refreshIncome: null }
-  | { transfer: null }
-  | { collect: null };
+  | { increaseLiquidity: null };
 export interface TransactionsType {
   to: string;
-  action: _TransactionType;
+  action: TransactionType;
   token0Id: string;
   token1Id: string;
   liquidityTotal: bigint;
@@ -104,24 +97,13 @@ export interface TransactionsType {
   token1Symbol: string;
   poolId: string;
 }
-export type _TransactionType =
-  | { fee: null }
-  | { burn: null }
-  | { claim: null }
-  | { mint: null }
-  | { swap: null }
-  | { addLiquidity: null }
-  | { removeLiquidity: null }
-  | { refreshIncome: null }
-  | { transfer: null }
-  | { collect: null };
 export interface _SERVICE {
   addAdmin: ActorMethod<[string], boolean>;
   backBaseData: ActorMethod<[], undefined>;
   clearCacheRecordBack: ActorMethod<[], undefined>;
   cycleAvailable: ActorMethod<[], NatResult>;
   cycleBalance: ActorMethod<[], NatResult>;
-  get: ActorMethod<[Address__1, bigint, bigint], RecordPage>;
+  get: ActorMethod<[Address, bigint, bigint], RecordPage>;
   getAddressAndCountByCondition: ActorMethod<
     [string, string, bigint, bigint, bigint],
     Array<{ count: bigint; address: string }>
@@ -149,7 +131,6 @@ export interface _SERVICE {
   rollBackBaseData: ActorMethod<[], undefined>;
   rollBackCache: ActorMethod<[], undefined>;
   rollBackCache_Token: ActorMethod<[], undefined>;
-  rollBackDataBaseRecord: ActorMethod<[bigint, bigint], undefined>;
   rollBackData_Pools: ActorMethod<[bigint, bigint], boolean>;
   rollBackData_Token: ActorMethod<[bigint, bigint], boolean>;
   rollBackStatus: ActorMethod<[boolean], undefined>;
@@ -157,7 +138,7 @@ export interface _SERVICE {
   rollBackStatus_token: ActorMethod<[boolean], undefined>;
   rollBackSwapDayData: ActorMethod<[], undefined>;
   rollBackUserRecord: ActorMethod<[], undefined>;
-  setCanister: ActorMethod<[string, string], undefined>;
+  setCanister: ActorMethod<[string, string, string], undefined>;
   setSwapPositionManagerCanisterId: ActorMethod<[string], undefined>;
   sortBaseData: ActorMethod<[], undefined>;
 }

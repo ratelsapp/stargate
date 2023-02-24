@@ -1,13 +1,16 @@
-import { updateNFT } from "./actions";
+import { updateTokenLogo } from "./actions";
 import { initialState } from "./states";
 
 import { createReducer } from "@reduxjs/toolkit";
 
 export default createReducer(initialState, (builder) => {
-  builder.addCase(updateNFT, (state, { payload }) => {
+  builder.addCase(updateTokenLogo, (state, { payload }) => {
     return {
       ...state,
-      ...payload,
+      logos: {
+        ...state.logos,
+        [payload.canisterId]: payload.logo,
+      },
     };
   });
 });

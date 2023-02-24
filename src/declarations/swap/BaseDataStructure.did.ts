@@ -1,21 +1,16 @@
 export const idlFactory = ({ IDL }: any) => {
   const NatResult = IDL.Variant({ ok: IDL.Nat, err: IDL.Text });
-  const Address__1 = IDL.Text;
-  const _TransactionType = IDL.Variant({
-    fee: IDL.Null,
-    burn: IDL.Null,
+  const Address = IDL.Text;
+  const TransactionType = IDL.Variant({
+    decreaseLiquidity: IDL.Null,
     claim: IDL.Null,
-    mint: IDL.Null,
     swap: IDL.Null,
     addLiquidity: IDL.Null,
-    removeLiquidity: IDL.Null,
-    refreshIncome: IDL.Null,
-    transfer: IDL.Null,
-    collect: IDL.Null,
+    increaseLiquidity: IDL.Null,
   });
   const TransactionsType = IDL.Record({
     to: IDL.Text,
-    action: _TransactionType,
+    action: TransactionType,
     token0Id: IDL.Text,
     token1Id: IDL.Text,
     liquidityTotal: IDL.Nat,
@@ -52,18 +47,6 @@ export const idlFactory = ({ IDL }: any) => {
     limit: IDL.Nat,
     totalElements: IDL.Nat,
   });
-  const TransactionType = IDL.Variant({
-    fee: IDL.Null,
-    burn: IDL.Null,
-    claim: IDL.Null,
-    mint: IDL.Null,
-    swap: IDL.Null,
-    addLiquidity: IDL.Null,
-    removeLiquidity: IDL.Null,
-    refreshIncome: IDL.Null,
-    transfer: IDL.Null,
-    collect: IDL.Null,
-  });
   const Page = IDL.Record({
     content: IDL.Vec(TransactionsType),
     offset: IDL.Nat,
@@ -87,14 +70,13 @@ export const idlFactory = ({ IDL }: any) => {
     volumeUSDChange: IDL.Float64,
     tvlUSDChange: IDL.Float64,
   });
-  const Address = IDL.Text;
   const SwapRecordInfo = IDL.Record({
     to: IDL.Text,
     feeAmount: IDL.Int,
     action: TransactionType,
     feeAmountTotal: IDL.Int,
-    token0Id: Address,
-    token1Id: Address,
+    token0Id: IDL.Text,
+    token1Id: IDL.Text,
     token0AmountTotal: IDL.Nat,
     liquidityTotal: IDL.Nat,
     from: IDL.Text,
@@ -121,7 +103,7 @@ export const idlFactory = ({ IDL }: any) => {
     clearCacheRecordBack: IDL.Func([], [], []),
     cycleAvailable: IDL.Func([], [NatResult], ["query"]),
     cycleBalance: IDL.Func([], [NatResult], ["query"]),
-    get: IDL.Func([Address__1, IDL.Nat, IDL.Nat], [RecordPage], ["query"]),
+    get: IDL.Func([Address, IDL.Nat, IDL.Nat], [RecordPage], ["query"]),
     getAddressAndCountByCondition: IDL.Func(
       [IDL.Text, IDL.Text, IDL.Nat, IDL.Nat, IDL.Nat],
       [IDL.Vec(IDL.Record({ count: IDL.Nat, address: IDL.Text }))],
@@ -154,7 +136,6 @@ export const idlFactory = ({ IDL }: any) => {
     rollBackBaseData: IDL.Func([], [], []),
     rollBackCache: IDL.Func([], [], []),
     rollBackCache_Token: IDL.Func([], [], []),
-    rollBackDataBaseRecord: IDL.Func([IDL.Nat, IDL.Nat], [], []),
     rollBackData_Pools: IDL.Func([IDL.Nat, IDL.Nat], [IDL.Bool], []),
     rollBackData_Token: IDL.Func([IDL.Nat, IDL.Nat], [IDL.Bool], []),
     rollBackStatus: IDL.Func([IDL.Bool], [], []),
@@ -162,11 +143,8 @@ export const idlFactory = ({ IDL }: any) => {
     rollBackStatus_token: IDL.Func([IDL.Bool], [], []),
     rollBackSwapDayData: IDL.Func([], [], []),
     rollBackUserRecord: IDL.Func([], [], []),
-    setCanister: IDL.Func([IDL.Text, IDL.Text], [], []),
+    setCanister: IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
     setSwapPositionManagerCanisterId: IDL.Func([IDL.Text], [], []),
     sortBaseData: IDL.Func([], [], []),
   });
-};
-export const init = ({ IDL }) => {
-  return [];
 };

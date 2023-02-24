@@ -1,7 +1,7 @@
 export interface GlobalState {
-  nfts: {};
+  logos: { [key: string]: string };
 }
 
 export const initialState: GlobalState = {
-  nfts: {},
+  logos: {},
 };

@@ -55,7 +55,7 @@ export default function NFTTrade() {
             return <TransactionElement key={ele.id} transaction={ele} />;
           })}
 
-          {transactions?.length === 0 ? <NoData></NoData> : null}
+          {transactions?.length === 0 || !transactions ? <NoData></NoData> : null}
         </Box>
       </Box>
     </Box>

@@ -8,6 +8,7 @@ import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import { AuthState } from "./wallet/states";
 import { SessionState } from "./session/states";
 import { SnackbarState } from "./snackbar/states";
+import { GlobalState } from "./global/states";
 
 import { PersistState } from "redux-persist/es/types";
 
@@ -20,6 +21,7 @@ export interface AllState {
   session: SessionState & PersistPartial;
   cache: any;
   snackbar: SnackbarState;
+  global: GlobalState;
 }
 
 const rootPersistConfig = {

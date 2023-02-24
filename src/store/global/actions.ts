@@ -1,4 +1,3 @@
 import { createAction } from "@reduxjs/toolkit";
-import { GlobalState } from "./states";
 
-export const updateNFT = createAction<GlobalState>("global/updateNFT");
+export const updateTokenLogo = createAction<{ canisterId: string; logo: string }>("global/updateTokenLogo");
