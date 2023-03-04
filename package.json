@@ -1,17 +1,14 @@
 {
   "name": "ratel_new_frontend",
   "version": "0.1.0",
-  "description": "Internet Computer starter application",
-  "keywords": [
-    "Internet Computer",
-    "Motoko",
-    "JavaScript",
-    "Canister"
-  ],
+  "description": "star gate",
   "scripts": {
     "build": "react-scripts build",
     "start": "react-scripts start",
     "lint": "eslint src --fix"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -35,6 +32,7 @@
     "http-proxy-middleware": "^2.0.6",
     "prettier": "^2.8.3",
     "process": "0.11.10",
+    "react-error-overlay": "^6.0.11",
     "stream-browserify": "3.0.0",
     "terser-webpack-plugin": "^5.3.3",
     "ts-loader": "^9.4.1",

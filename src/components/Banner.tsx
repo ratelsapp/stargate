@@ -6,7 +6,7 @@ import { Twitter, ShallowTwitter } from "assets/images/Twitter";
 import { Github, ShallowGithub } from "assets/images/Github";
 import { Discord, ShallowDiscord } from "assets/images/Discord";
 import Link from "components/Link";
-import { useAccountProfile, useUser, useAccountFollower, follow, unFollow } from "hooks/index";
+import { useAccountProfile, useUser, useAccountFollower, follow, unFollow, useGet } from "hooks/index";
 import { useParams } from "react-router-dom";
 import { useMemo } from "react";
 import { Principal } from "@dfinity/principal";
@@ -14,6 +14,7 @@ import NickName from "components/Profile/NickName";
 import { principalToAccount } from "utils/index";
 import Copy, { CopyChildProps } from "components/Copy";
 import GlobalContext from "../context";
+import { DiscordVerifyURL, GithubVerifyURL, TwitterVerifyURL } from "utils/verify";
 
 export default function Banner() {
   const [reload, setReload] = useState(false);
@@ -44,6 +45,12 @@ export default function Banner() {
   const { result: profile } = useAccountProfile(userPrincipal, reload);
   const { result: user } = useUser(userPrincipal, reload);
   const { result: follower } = useAccountFollower(userPrincipal, reload);
+  const { result: getUser } = useGet();
+
+  console.log("user", user);
+  console.log("follower", follower);
+  console.log("profile", profile);
+  console.log("getUser", getUser);
 
   const isFollowing = useMemo(() => {
     if (!follower || !principal) return false;
@@ -149,6 +156,10 @@ export default function Banner() {
               <Link href={`https://twitter.com/${user?.twitter[0].replace(/@/g, "")}`}>
                 <Twitter></Twitter>
               </Link>
+            ) : isOwner ? (
+              <Link href={TwitterVerifyURL}>
+                <Twitter></Twitter>
+              </Link>
             ) : (
               <ShallowTwitter></ShallowTwitter>
             )}
@@ -159,6 +170,10 @@ export default function Banner() {
               <Link href="https://discord.com">
                 <Discord></Discord>
               </Link>
+            ) : isOwner ? (
+              <Link href={DiscordVerifyURL}>
+                <Discord></Discord>
+              </Link>
             ) : (
               <ShallowDiscord></ShallowDiscord>
             )}
@@ -167,6 +182,10 @@ export default function Banner() {
           <Box sx={{ width: "44px", height: "44px" }}>
             {user?.github[0] ? (
               <Link href={`https://github.com/${user?.github[0]}`}>
+                <Github></Github>
+              </Link>
+            ) : isOwner ? (
+              <Link href={GithubVerifyURL}>
                 <Github></Github>
               </Link>
             ) : (

@@ -5,6 +5,8 @@ import { Principal } from "@dfinity/principal";
 import { enumResultFormat } from "utils/index";
 import { User, UserAccountResponse } from "../types/api";
 import { useParams } from "react-router-dom";
+import { SocialMedia } from "types/global";
+import { verifyTypeFormat } from "utils/verify";
 
 export function usePrincipalFromParams() {
   const { principal: userPrincipal } = useParams<{ principal: string }>();
@@ -24,9 +26,20 @@ export function useUser(account: string | undefined, reload?: boolean) {
   return useCallData(
     useCallback(async () => {
       const data = enumResultFormat<User[]>(await (await backend()).findUser(Principal.fromText(account!))).data;
+      console.log("data", data);
       return !!data ? data[0] : undefined;
     }, [account]),
     !!account,
+    reload
+  );
+}
+
+export function useGet(reload?: boolean) {
+  return useCallData(
+    useCallback(async () => {
+      return enumResultFormat<User>(await (await backend(true)).get()).data;
+    }, []),
+    true,
     reload
   );
 }
@@ -75,6 +88,12 @@ export async function unFollow(user: Principal) {
 
 export async function updateNickName(nickName: string) {
   return enumResultFormat<boolean>(await (await backend(true)).updateNickname(nickName));
+}
+
+export async function useUserVerify() {
+  return useCallback(async (type: SocialMedia, url: string) => {
+    return enumResultFormat<boolean>(await (await backend(true)).verify(verifyTypeFormat(type), url));
+  }, []);
 }
 
 // export function useFetchICPPrice() {

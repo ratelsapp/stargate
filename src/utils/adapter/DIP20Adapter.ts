@@ -36,7 +36,7 @@ export class DIP20TokenAdapter extends BaseTokenAdapter<DIP20Service> {
       status: ResultStatus.OK,
       data: {
         decimals: metadata.decimals,
-        ownerAccount: principalToAccount(metadata.owner.toString()),
+        ownerAccount: metadata.owner ? principalToAccount(metadata.owner.toString()) : "",
         metadata: [],
         name: metadata.name,
         symbol: metadata.symbol,

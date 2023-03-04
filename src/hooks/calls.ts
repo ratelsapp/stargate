@@ -6,6 +6,7 @@ import { UserNFTElement, NFTTransaction } from "types/nft";
 import entrepot from "utils/entrepot";
 import { tokenList } from "actors/index";
 import { TokenMetadata } from "types/token";
+import { SocialMedia } from "types/global";
 
 export const USER_ALL_NFTS_API = (account: string) =>
   `https://us-central1-entrepot-api.cloudfunctions.net/api/user/${account}/all`;
@@ -53,3 +54,18 @@ export function useTokens() {
 
   return useCallData(call);
 }
+
+export const VerifyBaseUrl = "https://api.ratels.app";
+
+export const VERIFY_BASE_URL: { [key in SocialMedia]: string } = {
+  [SocialMedia.Discord]: `${VerifyBaseUrl}/api/v1/ratels/discord/user`,
+  [SocialMedia.Github]: `${VerifyBaseUrl}/api/v1/ratels/github/user`,
+  [SocialMedia.Twitter]: `${VerifyBaseUrl}/api/v1/ratels/twitter/user`,
+};
+
+export const getVerifyBaseInfo = async (code: string, type: SocialMedia) =>
+  await axios
+    .post(VERIFY_BASE_URL[type], {
+      code: code,
+    })
+    .then((res) => res.data);

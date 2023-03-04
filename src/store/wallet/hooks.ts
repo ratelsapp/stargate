@@ -36,6 +36,10 @@ export function useIsConnected() {
   return useAppSelector((state) => state.wallet.isConnected);
 }
 
+export function useWallet() {
+  return useAppSelector((state) => state.wallet);
+}
+
 export function getWalletIsConnected() {
   const { wallet } = store.getState();
   return wallet.isConnected;

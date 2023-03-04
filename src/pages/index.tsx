@@ -2,8 +2,11 @@ import TopBar from "../components/TopBar";
 import Main from "../components/main";
 import Banner from "../components/Banner";
 import { Box } from "@mui/material";
+import useVerifySocialMedia from "hooks/useVerifySocialMedia";
 
 export default function Index() {
+  useVerifySocialMedia();
+
   return (
     <Box>
       <Box sx={{ width: "100%" }}>

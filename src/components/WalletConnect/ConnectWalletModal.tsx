@@ -19,7 +19,7 @@ const Wallets = [
 export default function ConnectWalletModal({ onClose, title }: ConnectWalletModalProps) {
   const [loading, setLoading] = useState<undefined | string>(undefined);
 
-  const { open, setOpen } = useContext(GlobalContext);
+  const { connectWalletOpen, setConnectWalletOpen } = useContext(GlobalContext);
 
   const handleConnect = async (wallet: string) => {
     if (loading) return;
@@ -37,7 +37,7 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
       const isConnected = await connector.connect();
 
       if (isConnected) {
-        setOpen(false);
+        setConnectWalletOpen(false);
       }
 
       setLoading(undefined);
@@ -51,7 +51,7 @@ export default function ConnectWalletModal({ onClose, title }: ConnectWalletModa
 
   return (
     <Dialog
-      open={open}
+      open={connectWalletOpen}
       onClose={onClose}
       sx={{
         "& .MuiPaper-root": {

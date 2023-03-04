@@ -14,3 +14,9 @@ export type Result<T> = {
   readonly data?: T;
   readonly message: string;
 };
+
+export enum SocialMedia {
+  Twitter = "Twitter",
+  Github = "Github",
+  Discord = "Discord",
+}

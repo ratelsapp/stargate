@@ -2,11 +2,12 @@ import { Box, Typography, Popper } from "@mui/material";
 import { ClickAwayListener } from "@mui/base";
 import ConnectWalletModal from "./WalletConnect/ConnectWalletModal";
 import { useIsConnected, usePrincipal, useUserLogout } from "store/wallet/hooks";
-import { useEffect, useState, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import ComLogo from "../assets/images/ratelsComLogo.svg";
 import Logo from "../assets/images/logo.svg";
 import Online from "../assets/images/online.svg";
 import GlobalContext from "../context";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ConnectIcon() {
   return (
@@ -28,12 +29,6 @@ export default function TopBar() {
 
   const logout = useUserLogout();
 
-  useEffect(() => {
-    if (!isConnected) {
-      globalContext.setOpen(true);
-    }
-  }, [isConnected]);
-
   const principal = usePrincipal();
 
   const handleMouseEnter = () => {
@@ -48,6 +43,15 @@ export default function TopBar() {
     logout();
   };
 
+  const navigate = useNavigate();
+
+  const { principal: paramPrincipal } = useParams() as { principal: string };
+
+  const handleProfile = () => {
+    if (paramPrincipal === principal?.toString()) return;
+    navigate(`/user/${principal?.toString()}`);
+  };
+
   return (
     <>
       <Box sx={{ display: "flex", padding: "40px 60px 0", alignItems: "center" }}>
@@ -57,7 +61,7 @@ export default function TopBar() {
           {!isConnected ? (
             <Box
               sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}
-              onClick={() => globalContext.setOpen(true)}
+              onClick={() => globalContext.setConnectWalletOpen(true)}
             >
               <ConnectIcon></ConnectIcon>
               <Typography sx={{ margin: "0 0 0 10px" }}>Connect Wallet</Typography>
@@ -92,18 +96,43 @@ export default function TopBar() {
                   <ClickAwayListener onClickAway={() => setOpen(false)}>
                     <Box
                       sx={{
+                        display: "flex",
+                        flexDirection: "column",
                         width: "120px",
-                        height: "40px",
                         borderRadius: "8px",
                         background: "#000",
-                        display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        cursor: "pointer",
+                        padding: "0 5px",
                       }}
-                      onClick={handleDisconnect}
                     >
-                      <Typography fontWeight={500} color="#ffffff">
+                      <Typography
+                        sx={{
+                          height: "40px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        fontWeight={500}
+                        color="#ffffff"
+                        onClick={handleProfile}
+                      >
+                        Profile
+                      </Typography>
+                      <Box sx={{ background: "#fff", height: "1px", width: "100%" }}></Box>
+                      <Typography
+                        sx={{
+                          height: "40px",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        fontWeight={500}
+                        color="#ffffff"
+                        onClick={handleDisconnect}
+                      >
                         Disconnect
                       </Typography>
                     </Box>
