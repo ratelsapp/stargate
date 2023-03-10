@@ -5,6 +5,7 @@ import { Principal } from "@dfinity/principal";
 import { enumResultFormat } from "utils";
 import { SNS1_ID, SNS1_LOGO, WICP_ID, WICP_LOGO, ckBTC_ID, ckBTC_LOGO, ICP_ID, ICP_LOGO } from "constants/index";
 import { getTokenStateLogo, useUpdateTokenStateLogo } from "store/global/hooks";
+import { CHAT_ID, CHAT_LOGO } from "constants/chat";
 
 export function useTokenMetadata(canisterId: string | undefined) {
   const call = useCallback(async () => {
@@ -21,6 +22,7 @@ export function useTokenLogo(canisterId: string | undefined) {
     if (canisterId === SNS1_ID) return SNS1_LOGO;
     if (canisterId === WICP_ID) return WICP_LOGO;
     if (canisterId === ckBTC_ID) return ckBTC_LOGO;
+    if (canisterId === CHAT_ID) return CHAT_LOGO;
     if (canisterId === ICP_ID) return ICP_LOGO;
 
     const stateLogo = getTokenStateLogo(canisterId!);

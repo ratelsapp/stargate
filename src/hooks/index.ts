@@ -26,7 +26,6 @@ export function useUser(account: string | undefined, reload?: boolean) {
   return useCallData(
     useCallback(async () => {
       const data = enumResultFormat<User[]>(await (await backend()).findUser(Principal.fromText(account!))).data;
-      console.log("data", data);
       return !!data ? data[0] : undefined;
     }, [account]),
     !!account,
@@ -34,10 +33,10 @@ export function useUser(account: string | undefined, reload?: boolean) {
   );
 }
 
-export function useGet(reload?: boolean) {
+export function useGetUser(reload?: boolean) {
   return useCallData(
     useCallback(async () => {
-      return enumResultFormat<User>(await (await backend(true)).get()).data;
+      return enumResultFormat<User>(await (await backend()).get()).data;
     }, []),
     true,
     reload
@@ -90,7 +89,7 @@ export async function updateNickName(nickName: string) {
   return enumResultFormat<boolean>(await (await backend(true)).updateNickname(nickName));
 }
 
-export async function useUserVerify() {
+export function useUserVerify() {
   return useCallback(async (type: SocialMedia, url: string) => {
     return enumResultFormat<boolean>(await (await backend(true)).verify(verifyTypeFormat(type), url));
   }, []);

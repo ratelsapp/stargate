@@ -63,7 +63,10 @@ export const VERIFY_BASE_URL: { [key in SocialMedia]: string } = {
   [SocialMedia.Twitter]: `${VerifyBaseUrl}/api/v1/ratels/twitter/user`,
 };
 
-export const getVerifyBaseInfo = async (code: string, type: SocialMedia) =>
+export const getVerifyBaseInfo = async (
+  code: string,
+  type: SocialMedia
+): Promise<{ code: number; data: string; message: string | null }> =>
   await axios
     .post(VERIFY_BASE_URL[type], {
       code: code,

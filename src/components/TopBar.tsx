@@ -1,6 +1,5 @@
 import { Box, Typography, Popper } from "@mui/material";
 import { ClickAwayListener } from "@mui/base";
-import ConnectWalletModal from "./WalletConnect/ConnectWalletModal";
 import { useIsConnected, usePrincipal, useUserLogout } from "store/wallet/hooks";
 import { useState, useRef, useContext } from "react";
 import ComLogo from "../assets/images/ratelsComLogo.svg";
@@ -143,8 +142,6 @@ export default function TopBar() {
           ) : null}
         </Box>
       </Box>
-
-      <ConnectWalletModal title="Connect Wallet"></ConnectWalletModal>
     </>
   );
 }

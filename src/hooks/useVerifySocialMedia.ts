@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { SocialMedia } from "types/global";
+import { ResultStatus, SocialMedia } from "types/global";
 import { getVerifyBaseInfo } from "hooks/calls";
-// import { useUserVerify } from "hooks/index";
+import { useUserVerify } from "hooks/index";
+import { useTips } from "./useTips";
 
 export function useParamsCode() {
   const [searchParams] = useSearchParams();
@@ -50,14 +51,26 @@ export function useURLCodeCheck() {
 }
 
 export default function useVerifySocialMedia() {
-  // const verify = useUserVerify();
+  const verify = useUserVerify();
   const { code, social } = useURLCodeCheck();
+  const [openTip] = useTips();
 
   useEffect(() => {
     async function call() {
       if (code && social) {
         const result = await getVerifyBaseInfo(code, social);
+
         console.log("result", result);
+
+        if (result.code === 200) {
+          const res = await verify(social, result.data);
+          console.log("res", res);
+          if (res.status === ResultStatus.OK) {
+            openTip("Verify successfully", "success");
+          } else {
+            openTip(res.message, "error");
+          }
+        }
       }
     }
 

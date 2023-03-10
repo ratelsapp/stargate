@@ -8,7 +8,7 @@ export default function useWalletConnector() {
   const isConnected = useIsConnected();
 
   useEffect(() => {
-    if (!isConnected) {
+    if (isConnected === false) {
       globalContext.setConnectWalletOpen(true);
     }
   }, [isConnected]);
