@@ -14,7 +14,7 @@ export type ActorConstructor = {
 
 const icHost = "https://ic0.app";
 
-export function isICConnector(connector: WalletType) {
+export function isStoicConnector(connector: WalletType) {
   return connector === WalletType.STOIC;
 }
 
@@ -134,7 +134,7 @@ export class Actor {
       if (this.connector === WalletType.PLUG) {
         await window.ic.plug.createAgent({ whitelist: [canisterId], host });
         return window.ic.plug.agent;
-      } else if (isICConnector(this.connector)) {
+      } else if (isStoicConnector(this.connector)) {
         return window.connector.httpAgent;
       }
     } else if (!!identity) {

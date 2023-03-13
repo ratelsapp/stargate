@@ -40,12 +40,16 @@ export default function NFTs() {
           margin: "30px 0 0 0",
         }}
       >
-        <Box sx={{ display: "flex", gap: "16px 16px", flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: "16px 16px", flexWrap: "wrap", width: "100%" }}>
           {nfts?.map((ele) => (
             <NFT nft={ele} key={ele.id} />
           ))}
 
-          {nfts?.length === 0 || !nfts ? <NoData></NoData> : null}
+          {nfts?.length === 0 || !nfts ? (
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+              <NoData></NoData>
+            </Box>
+          ) : null}
         </Box>
       </Box>
     </Box>

@@ -60,11 +60,8 @@ export default function useVerifySocialMedia() {
       if (code && social) {
         const result = await getVerifyBaseInfo(code, social);
 
-        console.log("result", result);
-
         if (result.code === 200) {
           const res = await verify(social, result.data);
-          console.log("res", res);
           if (res.status === ResultStatus.OK) {
             openTip("Verify successfully", "success");
           } else {

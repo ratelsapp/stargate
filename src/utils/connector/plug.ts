@@ -48,11 +48,8 @@ export class PlugConnector implements IConnector {
   ): Promise<ActorSubclass<Service> | undefined> {
     await window.ic.plug.createAgent({ host: "", whitelist: [] });
 
-    const agent = window.ic.plug.agent;
-
-    // TODO: add actorOptions?
     return Actor.createActor(idlFactory, {
-      agent,
+      agent: window.ic.plug.agent,
       canisterId,
     });
   }

@@ -34,7 +34,7 @@ import { idlFactory as BaseDataStructureIdl } from "../declarations/swap/BaseDat
 export const backend = async (identity?: ActorIdentity) =>
   await actor.create<BackendService>({
     idlFactory: BackendIdl,
-    canisterId: "viz6v-ziaaa-aaaak-qbhqa-cai",
+    canisterId: "wlcaj-eyaaa-aaaal-aav4a-cai",
     identity,
   });
 

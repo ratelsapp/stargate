@@ -6,7 +6,7 @@ import { Twitter, ShallowTwitter } from "assets/images/Twitter";
 import { Github, ShallowGithub } from "assets/images/Github";
 import { Discord, ShallowDiscord } from "assets/images/Discord";
 import Link from "components/Link";
-import { useAccountProfile, useUser, useAccountFollower, follow, unFollow, useGetUser } from "hooks/index";
+import { useAccountProfile, useUser, useAccountFollower, follow, unFollow } from "hooks/index";
 import { useParams } from "react-router-dom";
 import { useMemo } from "react";
 import { Principal } from "@dfinity/principal";
@@ -45,11 +45,6 @@ export default function Banner() {
   const { result: profile } = useAccountProfile(userPrincipal, reload);
   const { result: user } = useUser(userPrincipal, reload);
   const { result: follower } = useAccountFollower(userPrincipal, reload);
-  const { result: getUser } = useGetUser();
-
-  // console.log("user", user);
-  // console.log("profile", profile);
-  // console.log("getUser", getUser);
 
   const isFollowing = useMemo(() => {
     if (!follower || !principal) return false;

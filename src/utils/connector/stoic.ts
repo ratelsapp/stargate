@@ -72,7 +72,6 @@ export class StoicConnector implements IConnector {
       });
     }
 
-    // TODO: add actorOptions?
     return Actor.createActor(idlFactory, {
       agent,
       canisterId,

@@ -60,6 +60,3 @@ export const idlFactory = ({ IDL }: any) => {
     verify: IDL.Func([VerifyType, IDL.Text], [Result], []),
   });
 };
-export const init = ({ IDL }) => {
-  return [];
-};
