@@ -357,7 +357,3 @@ export const idlFactory = ({ IDL }: any) => {
   });
   return SwapPool;
 };
-export const init = ({ IDL }) => {
-  const Token = IDL.Record({ address: IDL.Text, standard: IDL.Text });
-  return [Token, Token, IDL.Text, IDL.Text, IDL.Text, IDL.Text];
-};

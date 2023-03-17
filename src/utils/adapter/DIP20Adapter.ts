@@ -46,7 +46,7 @@ export class DIP20TokenAdapter extends BaseTokenAdapter<DIP20Service> {
   }
 
   public async logo({ canisterId }: LogoRequest) {
-    const logo = (await (await this.actor(canisterId)).logo()) as string;
+    const logo = enumResultFormat<string>(await (await this.actor(canisterId)).logo()).data;
 
     return {
       status: ResultStatus.OK,

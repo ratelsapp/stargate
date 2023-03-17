@@ -1,4 +1,4 @@
-export const idlFactory = ({ IDL }) => {
+export const idlFactory = ({ IDL }: any) => {
   const Subaccount = IDL.Vec(IDL.Nat8);
   const Account = IDL.Record({
     owner: IDL.Principal,
@@ -158,27 +158,4 @@ export const idlFactory = ({ IDL }) => {
     ),
   });
   return Ledger;
-};
-export const init = ({ IDL }) => {
-  return [
-    IDL.Record({
-      decimals: IDL.Nat8,
-      token_symbol: IDL.Text,
-      transfer_fee: IDL.Nat,
-      minting_account: IDL.Record({
-        owner: IDL.Principal,
-        subaccount: IDL.Opt(IDL.Vec(IDL.Nat8)),
-      }),
-      initial_mints: IDL.Vec(
-        IDL.Record({
-          account: IDL.Record({
-            owner: IDL.Principal,
-            subaccount: IDL.Opt(IDL.Vec(IDL.Nat8)),
-          }),
-          amount: IDL.Nat,
-        })
-      ),
-      token_name: IDL.Text,
-    }),
-  ];
 };

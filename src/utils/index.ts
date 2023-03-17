@@ -33,7 +33,7 @@ export function enumResultFormat<T>(result: any): Result<T> {
 
   const key = Object.keys(result);
 
-  if (result && isObject(result) && key && key[0] && isResultKey(key[0])) {
+  if (result && isObject(result as object) && key && key[0] && isResultKey(key[0])) {
     let message = "";
 
     if (isResultErrKey(key[0]) && isObject(result[key[0]])) {

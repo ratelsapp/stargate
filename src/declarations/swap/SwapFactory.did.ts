@@ -70,6 +70,3 @@ export const idlFactory = ({ IDL }: any) => {
   });
   return SwapFactory;
 };
-export const init = ({ IDL }) => {
-  return [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text];
-};
