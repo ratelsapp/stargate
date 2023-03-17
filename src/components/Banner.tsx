@@ -152,7 +152,7 @@ export default function Banner() {
               </Link>
             ) : isOwner ? (
               <Link target="_self" href={TwitterVerifyURL}>
-                <Twitter></Twitter>
+                <ShallowTwitter></ShallowTwitter>
               </Link>
             ) : (
               <ShallowTwitter></ShallowTwitter>
@@ -166,7 +166,7 @@ export default function Banner() {
               </Link>
             ) : isOwner ? (
               <Link target="_self" href={DiscordVerifyURL}>
-                <Discord></Discord>
+                <ShallowDiscord></ShallowDiscord>
               </Link>
             ) : (
               <ShallowDiscord></ShallowDiscord>
@@ -180,7 +180,7 @@ export default function Banner() {
               </Link>
             ) : isOwner ? (
               <Link target="_self" href={GithubVerifyURL}>
-                <Github></Github>
+                <ShallowGithub></ShallowGithub>
               </Link>
             ) : (
               <ShallowGithub></ShallowGithub>
