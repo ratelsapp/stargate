@@ -64,6 +64,7 @@ export default function useVerifySocialMedia() {
           const res = await verify(social, result.data);
           if (res.status === ResultStatus.OK) {
             openTip("Verify successfully", "success");
+            window.location.reload();
           } else {
             openTip(res.message, "error");
           }

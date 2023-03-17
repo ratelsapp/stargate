@@ -7,6 +7,7 @@ import Logo from "../assets/images/logo.svg";
 import Online from "../assets/images/online.svg";
 import GlobalContext from "../context";
 import { useNavigate, useParams } from "react-router-dom";
+import { COM_URL } from "constants/index";
 
 function ConnectIcon() {
   return (
@@ -68,7 +69,7 @@ export default function TopBar() {
           ) : null}
           {isConnected ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <a href="https://5fcuc-3aaaa-aaaam-qabea-cai.raw.ic0.app/#/" target="_blank" rel="noreferrer">
+              <a href={COM_URL} target="_blank" rel="noreferrer">
                 <img src={ComLogo} style={{ width: "92px", height: "32px" }} alt=""></img>
               </a>
               <Box sx={{ width: "1px", height: "24px", background: "#CCCCCC", margin: "0 32px" }}></Box>
